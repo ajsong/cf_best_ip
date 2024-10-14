@@ -1,0 +1,36 @@
+name: best_ip
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron:   0 */1 * * *
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions@v1
+
+    - name: Install Python
+      run: |
+        sudo apt update && \
+        sudo apt install python3
+      
+    - name: requirements
+      run: |
+        pip3 install -r requirements.txt
+        
+    - name: Filter
+      run: |
+        python3 main.py 
+      env: 
+        EMAIL: ${{ secrets.EMAIL }}
+        KEY: ${{ secrets.KEY }}
+        TG_TOKEN: ${{ secrets.TG_TOKEN }}
+        TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        DOMAINS: ${{ secrets.DOMAINS }}
