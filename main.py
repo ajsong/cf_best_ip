@@ -86,11 +86,6 @@ if __name__ == '__main__':
                         if lt['latency'] > item['latency']:
                             lt = item
             updater = CloudFlareDDNSUpdater(EMAIL, KEY)
-            #[
-            #    {"name":"yd.eoos.work", "type":"CM"},
-            #    {"name":"dx.eoos.work", "type":"CT"},
-            #    {"name":"lt.eoos.work", "type":"CU"}
-            #]
             urls = json.loads(DOMAINS)
             message = "更新优选IP\n"
             for url in urls:
@@ -103,14 +98,15 @@ if __name__ == '__main__':
                 elif url['type'] == 'CU':
                     updater.update_a_record(url['name'], lt['ip'])
                     message += url['name']+" == "+lt['ip']+"\n"
-            headers = {'Content-type': 'application/json;charset=UTF-8'}
-            data = {
-                'chat_id': TG_CHAT_ID,
-                'parse_mode': 'HTML',
-                'text': message,
-            }
-            url = f'https://tg.eyoung.work/bot{TG_TOKEN}/sendMessage'
-            requests.post(url=url, data=json.dumps(data), headers=headers)
+            if TG_TOKEN is not None:
+                headers = {'Content-type': 'application/json;charset=UTF-8'}
+                data = {
+                    'chat_id': TG_CHAT_ID,
+                    'parse_mode': 'HTML',
+                    'text': message,
+                }
+                url = f'https://tg.eyoung.work/bot{TG_TOKEN}/sendMessage'
+                requests.post(url=url, data=json.dumps(data), headers=headers)
             print('操作完成')
         else:
             print(ret['info'])
