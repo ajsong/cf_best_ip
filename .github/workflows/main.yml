@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions@v1
+    - uses: actions/filter@v1
 
     - name: Install Python
       run: |
