@@ -105,7 +105,7 @@ if __name__ == '__main__':
                     'parse_mode': 'HTML',
                     'text': message,
                 }
-                url = f'https://tg.eyoung.work/bot{TG_TOKEN}/sendMessage'
+                url = f'https://api.telegram.org/bot{TG_TOKEN}/sendMessage'
                 requests.post(url=url, data=json.dumps(data), headers=headers)
             print('操作完成')
         else:
